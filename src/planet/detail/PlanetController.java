@@ -51,7 +51,6 @@ public class PlanetController implements Initializable {
 
     @FXML
     private Label fancyPlanetName;
-    
 
     @FXML
     void selectImage(ActionEvent event) {
@@ -70,7 +69,6 @@ public class PlanetController implements Initializable {
 
     @FXML
     void loadPlanet(ActionEvent event) {
-    	
     }
     
     @FXML
