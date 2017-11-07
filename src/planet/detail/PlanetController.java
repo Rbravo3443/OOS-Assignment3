@@ -2,9 +2,9 @@ package planet.detail;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,13 +16,21 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
 public class PlanetController implements Initializable {
 	private Planet planet;
+	private Thread thread1;
 	public PlanetController(Planet planet){
 		this.planet = planet;
+		//thread1 = new Thread(new NumberParallel(this.planet));
 	}
 	public void initialize(URL location, ResourceBundle resources){
+		//thread1.start();
 		planetName.setText(planet.getPlanetName());
+		planetDiameterKM.setText(planet.getDiameterkm());
+		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
+		planetNumberOfMoons.setText(Integer.toString(planet.getNumberofmoon()));
+		
 	}
 
     @FXML
@@ -75,5 +83,23 @@ public class PlanetController implements Initializable {
     
     @FXML
     void savePlanet(ActionEvent event) {
-    }
+    	PrintWriter writer = null;
+    	planetDiameterM.setText(planet.KM_To_M(Double.parseDouble(planetDiameterKM.getText())));
+    	planetMeanSurfaceTempF.setText(planet.Far_To_Cel(Double.parseDouble(planetMeanSurfaceTempC.getText())));
+    	try{
+    		writer = new PrintWriter("Planet.txt","UTF-8");
+    		writer.println("planetName:" +planetName.getText());
+    		writer.println("Planet Diameter KM: " +planetDiameterKM.getText());
+    		writer.println("Planet Diameter M: "+planetDiameterM.getText());
+    		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
+    		writer.println("Planet Surface Temperature Farheniet: " +planetMeanSurfaceTempF.getText());
+    		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
+    		}catch(Exception e){
+    		System.out.println("File is not being written to");
+    	}
+    		
+    	writer.close();
+    	
+    	}	
+    
 }

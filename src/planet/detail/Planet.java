@@ -41,6 +41,7 @@ public class Planet {
 		if(!isValiddiameterNumber(diameterkm))
 			throw new InvalidPlanetException("Diameter is Invalid");
 		this.diameterkm.setValue(diameterkm);
+		//System.out.println(this.getDiameterkm());
 	}
 	
 	public String getTemperatureF() {
@@ -52,6 +53,7 @@ public class Planet {
 		this.diameterkm.setValue(temperatureF);
 	}
 
+
 	public int getNumberofmoon() {
 		return Numberofmoon.getValue();
 	}
@@ -62,30 +64,32 @@ public class Planet {
 		this.Numberofmoon.setValue(numberofmoon);
 	}
 	
-	private void Far_To_Cel(SimpleFloatProperty Far){
-		float far2 = Far.getValue(); 
-		this.temperatureC = ((far2)-32)*(0.5556);
+	public String Far_To_Cel(double Far){ 
+		this.temperatureC = ((Far)-32)*(0.5556);
+		return Double.toString(this.temperatureC);
 	}
 	
-	private void KM_To_M(SimpleFloatProperty km){
-		float km2 = km.getValue();
-		this.diameterm = km2 * 1000;
+	public String KM_To_M(double km){
+		this.diameterm = km * 1000;
+		return Double.toString(diameterm);
 	}
 	private boolean isValidNameLength(String testName){
-		if(testName.length() > 1 || testName.length() < 255)
+		if(testName.length() > 1 &&  testName.length() < 255)
 			return true;
 		return false;
 	}
 	private boolean isValidPlanet(String PlanetName){
 		boolean isvalid = false;
 		for(int i = 0; i < PlanetName.length(); i++){
-			
 			 char c = PlanetName.charAt(i);
-			 System.out.print(c);
 			 if((isValidNameLength(PlanetName)) &&
-					 (Character.isDigit(c) ||Character.isLetter(c)|| Character.isWhitespace(c)||c == '-'|| c == '.') )
+					 (Character.isDigit(c) ||Character.isLetter(c)||
+							 Character.isWhitespace(c)||c == '-'|| c == '.')){
 				 isvalid = true;
+			 }
+			 else{
 			 isvalid = false;
+			 }
 		}
 		return isvalid;
 	}
