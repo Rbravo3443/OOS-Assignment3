@@ -1,6 +1,7 @@
-planetName:memme
-Planet Diameter KM: 67
-Planet Diameter M: 67000.0
-Planet Surface Temperature :56
-Planet Surface Temperature Farheniet: 13.334399999999999
+planetName:JU
+Planet Diameter KM: 56.7
+Planet Diameter M: 56700.0
+Planet Surface Temperature :20
+Planet Surface Temperature Farheniet: -6.667199999999999
 Number of Moons: 5
+Image Link: C:\Users\Public\Pictures\Sample Pictures\Desert.jpg

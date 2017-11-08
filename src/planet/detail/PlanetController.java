@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +43,7 @@ public class PlanetController implements Initializable {
 
     @FXML
     private ImageView planetImage;
-
+    private String ImagePath;
     @FXML
     private Button selectImageButton;
 
@@ -67,17 +70,27 @@ public class PlanetController implements Initializable {
 
     @FXML
     void selectImage(ActionEvent event) {
-    	FileChooser Selector = new FileChooser();
-    	Selector.setTitle("Select Image");   
+    	//JFileChooser Selector = new JFileChooser();
+    	 JFileChooser chooser = new JFileChooser();
+    	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+    	        "JPG & GIF Images", "jpg", "gif");
+    	    chooser.setFileFilter(filter);
+    	    int returnVal = chooser.showOpenDialog(null);
+    	   
+    	//Selector.setTitle("Select Image");   
     	FileInputStream File;
     	try{
-    		File = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath() );
+    		File = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
     		Image image = new Image(File);
     		planetImage.setImage(image);
     	}
     	catch(FileNotFoundException e){
     		e.printStackTrace();
     	}
+    	 if(returnVal == JFileChooser.APPROVE_OPTION) {
+    		 ImagePath = chooser.getSelectedFile().getAbsolutePath();
+    		
+  	    }
     }
 
     @FXML
@@ -86,7 +99,7 @@ public class PlanetController implements Initializable {
     	Selector.setTitle("Load Image");
     	FileInputStream LoadedFile;
     	try{
-    		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath() );
+    		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
     	}catch(Exception e){
     		e.printStackTrace();
     	}
@@ -112,6 +125,7 @@ public class PlanetController implements Initializable {
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
     		number++;
     		text = "Planet";
+    		writer.println("Image Link: "+ImagePath);
     		}catch(Exception e){
     		System.out.println("File is not being written to");
     	}
