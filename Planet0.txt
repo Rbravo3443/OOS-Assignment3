@@ -1,0 +1,6 @@
+planetName:memme
+Planet Diameter KM: 67
+Planet Diameter M: 67000.0
+Planet Surface Temperature :56
+Planet Surface Temperature Farheniet: 13.334399999999999
+Number of Moons: 5

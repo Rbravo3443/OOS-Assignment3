@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,9 @@ import javafx.stage.Stage;
 public class PlanetController implements Initializable {
 	private Planet planet;
 	private Thread thread1;
+	private String text = "Planet";
+	private int number = 0;
+	
 	public PlanetController(Planet planet){
 		this.planet = planet;
 		//thread1 = new Thread(new NumberParallel(this.planet));
@@ -77,21 +82,36 @@ public class PlanetController implements Initializable {
 
     @FXML
     void loadPlanet(ActionEvent event) {
+    	FileChooser Selector = new FileChooser();
+    	Selector.setTitle("Load Image");
+    	FileInputStream LoadedFile;
+    	try{
+    		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath() );
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
     }
     
     @FXML
     void savePlanet(ActionEvent event) {
+    	
     	PrintWriter writer = null;
     	planetDiameterM.setText(planet.KM_To_M(Double.parseDouble(planetDiameterKM.getText())));
     	planetMeanSurfaceTempF.setText(planet.Far_To_Cel(Double.parseDouble(planetMeanSurfaceTempC.getText())));
     	try{
-    		writer = new PrintWriter("Planet.txt","UTF-8");
+    		String num = Integer.toString(number);
+    		text += num;
+    		text += ".txt";
+    		writer = new PrintWriter(text,"UTF-8");
     		writer.println("planetName:" +planetName.getText());
     		writer.println("Planet Diameter KM: " +planetDiameterKM.getText());
     		writer.println("Planet Diameter M: "+planetDiameterM.getText());
     		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
     		writer.println("Planet Surface Temperature Farheniet: " +planetMeanSurfaceTempF.getText());
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
+    		number++;
+    		text = "Planet";
     		}catch(Exception e){
     		System.out.println("File is not being written to");
     	}
