@@ -1,7 +1,7 @@
-planetName:JU
+planetName:jump
 Planet Diameter KM: 56.7
 Planet Diameter M: 56700.0
-Planet Surface Temperature :20
-Planet Surface Temperature Farheniet: -6.667199999999999
+Planet Surface Temperature :76
+Planet Surface Temperature Farheniet: 24.4464
 Number of Moons: 5
-Image Link: C:\Users\Public\Pictures\Sample Pictures\Desert.jpg
+Image Link: null

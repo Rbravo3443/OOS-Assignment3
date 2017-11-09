@@ -78,7 +78,7 @@ public class Planet {
 			return true;
 		return false;
 	}
-	private boolean isValidPlanet(String PlanetName){
+	public boolean isValidPlanet(String PlanetName){
 		boolean isvalid = false;
 		for(int i = 0; i < PlanetName.length(); i++){
 			 char c = PlanetName.charAt(i);
@@ -93,6 +93,16 @@ public class Planet {
 		}
 		return isvalid;
 	}
+	public boolean isValidFields(String PlanetName, String testDiameter, String temperature, int moons){
+		boolean valid = false;
+		if(isValidPlanet(PlanetName) && isValiddiameterNumber(testDiameter) &&  isValidTemperature(temperature) && isValidNumberofMoons(moons)){
+			valid = true;
+		}
+		else{
+			valid = false;
+		}
+		return valid;
+	}
 	private boolean isValidrealNumber(String testDiameter){
 		try{
 			 	Double.parseDouble(testDiameter);
@@ -102,7 +112,7 @@ public class Planet {
 		}
 		return true;
 	}
-	private boolean isValiddiameterNumber(String testDiameter){
+	public boolean isValiddiameterNumber(String testDiameter){
 		if(isValidrealNumber(testDiameter) && (0 > Double.parseDouble(testDiameter) ||
 				Double.parseDouble(testDiameter) < 1000 )){
 			return true;
