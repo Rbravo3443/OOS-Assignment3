@@ -2,14 +2,16 @@ package planet.detail;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +47,7 @@ public class PlanetController implements Initializable {
 
     @FXML
     private ImageView planetImage;
+    
     private String ImagePath;
     @FXML
     private Button selectImageButton;
@@ -96,13 +99,61 @@ public class PlanetController implements Initializable {
     	FileChooser Selector = new FileChooser();
     	Selector.setTitle("Load Image");
     	FileInputStream LoadedFile;
+    	InputStream StreamForFile;
+    	Scanner Scan;
     	try{
     		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
+    		StreamForFile = ((InputStream) LoadedFile);
+        	Scan = new Scanner( StreamForFile );
+        	while(Scan.hasNext()){
+        		 String test = Scan.nextLine();
+        		 Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
+        		 Matcher match = pattern.matcher(test);
+        		 if (match.find())
+        		 {
+        		     switch(match.group(1)){
+        		    	 case "planetName":
+        		    		planetName.setText(match.group(2));
+        		    		break;
+        		    	 case "Planet Diameter KM":
+        		    		planetDiameterKM.setText(match.group(2));
+        		    		break;
+        		    	 case "Planet Diameter M":
+        		    	    planetDiameterM.setText(match.group(2));
+        		    	    break;
+        		    	 case "Planet Surface Temperature ":
+        		    		planetMeanSurfaceTempC.setText(match.group(2));
+        		    		break;
+        		    	 case "Planet Surface Temperature Fahrenheit":
+        		    		planetMeanSurfaceTempF.setText(match.group(2));
+        		    		break;
+        		    	 case "Number of Moons":
+        		    		planetNumberOfMoons.setText(match.group(2));
+        		    		break;
+        		    	 case "Image Link":
+        		    		 System.out.println("hello");
+        		    		//System.out.println(m.group(2));
+        		    		//ImagePath = match.group(2);
+        		    		//FileInputStream File = new FileInputStream(ImagePath);
+        		    		//Image image = new Image(File);
+        		    		//planetImage.setImage(image);
+        		    		break;
+        		         default:
+        		    		 System.out.println("Something went very very very wrong!");
+        		    		 break;
+        		     }
+               		     
+        		 }
+        		 
+        	}
     	}catch(Exception e){
     		e.printStackTrace();
     	}
+ 
+    	
     	
     }
+    
     /** 
      * Refactor 
      * @param event
@@ -135,7 +186,7 @@ public class PlanetController implements Initializable {
     		writer.println("Planet Diameter KM: " +planetDiameterKM.getText());
     		writer.println("Planet Diameter M: "+planetDiameterM.getText());
     		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
-    		writer.println("Planet Surface Temperature Farheniet: " +planetMeanSurfaceTempF.getText());
+    		writer.println("Planet Surface Temperature Fahrenheit: " +planetMeanSurfaceTempF.getText());
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
     		number++;
     		text = "Planet";

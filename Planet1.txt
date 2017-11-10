@@ -1,6 +1,7 @@
-planetName:JUz
-Planet Diameter KM: 545435
-Planet Diameter M: 5.45435E8
-Planet Surface Temperature :454
-Planet Surface Temperature Farheniet: 234.4632
-Number of Moons: 21122
+planetName:yap
+Planet Diameter KM: 543.3
+Planet Diameter M: 543300.0
+Planet Surface Temperature :21
+Planet Surface Temperature Fahrenheit: -6.1116
+Number of Moons: 2
+Image Link: null
