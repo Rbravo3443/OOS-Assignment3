@@ -1,5 +1,6 @@
 package planet.detail;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 
@@ -47,7 +50,7 @@ public class PlanetController implements Initializable {
 
     @FXML
     private ImageView planetImage;
-    
+    @FXML
     private String ImagePath;
     @FXML
     private Button selectImageButton;
@@ -74,24 +77,13 @@ public class PlanetController implements Initializable {
     private Label fancyPlanetName;
 
     @FXML
-    void selectImage(ActionEvent event) {
-    	 JFileChooser chooser = new JFileChooser();
-    	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-    	        "JPG & GIF Images", "jpg", "gif");
-    	    chooser.setFileFilter(filter);
-    	    int returnVal = chooser.showOpenDialog(null); 
-    	FileInputStream File;
-    	try{
-    		File = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
-    		Image image = new Image(File);
-    		planetImage.setImage(image);
-    	}
-    	catch(FileNotFoundException e){
-    		e.printStackTrace();
-    	}
-    	 if(returnVal == JFileChooser.APPROVE_OPTION) {
-    		 ImagePath = chooser.getSelectedFile().getAbsolutePath();	
-  	    }
+    void selectImage(ActionEvent event) throws FileNotFoundException{
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Select Image");
+    	fileChooser.getExtensionFilters().addAll(
+    			new ExtensionFilter("Image Files", "*.png","*.jpg","*.gif"));
+    	File selectedFile = fileChooser.showOpenDialog(new Stage().getOwner());
+    	System.out.println(selectedFile.getName() +" "+ selectedFile.getAbsolutePath()); //print to console for debugging
     }
 
     @FXML
