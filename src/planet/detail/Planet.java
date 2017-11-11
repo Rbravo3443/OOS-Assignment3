@@ -10,7 +10,8 @@ public class Planet {
 	private SimpleStringProperty temperatureF;
 	private double temperatureC;
 	private SimpleIntegerProperty Numberofmoon;
-	public Planet(String planetName, String diameterkm, String temperatureF,int Numberofmoon )throws InvalidPlanetException{
+	
+	public Planet(String planetName, String diameterkm, String temperatureF, int Numberofmoon) throws InvalidPlanetException{
 		try{
 			this.planetName = new SimpleStringProperty();
 			this.diameterkm = new SimpleStringProperty();
@@ -29,14 +30,17 @@ public class Planet {
 	public String getPlanetName() {
 		return planetName.getValue();
 	}
+	
 	public void setPlanetName(String planetName) {
 		if(!isValidPlanet(planetName))
 			throw new InvalidPlanetException("Planet Name is invalid");
 		this.planetName.setValue(planetName);
 	}
+	
 	public String getDiameterkm() {
 		return diameterkm.getValue();
 	}
+	
 	public void setDiameterkm(String diameterkm) {
 		if(!isValiddiameterNumber(diameterkm))
 			throw new InvalidPlanetException("Diameter is Invalid");
@@ -47,16 +51,17 @@ public class Planet {
 	public String getTemperatureF() {
 		return temperatureF.getValue();
 	}
+	
 	public void setTemperatureF(String temperatureF) {
 		if(!isValidTemperature(temperatureF))
 			throw new InvalidPlanetException("Temperature in Farheneit is Invalid");
 		this.diameterkm.setValue(temperatureF);
 	}
 
-
 	public int getNumberofmoon() {
 		return Numberofmoon.getValue();
 	}
+	
 	public void setNumberofmoon(int numberofmoon) {
 		if(!isValidNumberofMoons(numberofmoon)){
 			throw new InvalidPlanetException("Moon Numbers is invalid");
@@ -70,14 +75,17 @@ public class Planet {
 	}
 	
 	public String KM_To_M(double km){
-		this.diameterm = km * 1000;
+		this.diameterm = km * 0.621371;
 		return Double.toString(diameterm);
 	}
+	
+	/* Validators */
 	private boolean isValidNameLength(String testName){
 		if(testName.length() > 1 &&  testName.length() < 255)
 			return true;
 		return false;
 	}
+	
 	public boolean isValidPlanet(String PlanetName){
 		boolean isvalid = false;
 		for(int i = 0; i < PlanetName.length(); i++){
@@ -93,6 +101,7 @@ public class Planet {
 		}
 		return isvalid;
 	}
+	
 	public boolean isValidFields(String PlanetName, String testDiameter, String temperature, int moons){
 		boolean valid = false;
 		if(isValidPlanet(PlanetName) && isValiddiameterNumber(testDiameter) &&  isValidTemperature(temperature) && isValidNumberofMoons(moons)){
@@ -103,6 +112,7 @@ public class Planet {
 		}
 		return valid;
 	}
+	
 	private boolean isValidrealNumber(String testDiameter){
 		try{
 			 	Double.parseDouble(testDiameter);
@@ -112,20 +122,23 @@ public class Planet {
 		}
 		return true;
 	}
+	
 	public boolean isValiddiameterNumber(String testDiameter){
 		if(isValidrealNumber(testDiameter) && (0 > Double.parseDouble(testDiameter) ||
-				Double.parseDouble(testDiameter) < 1000 )){
+				Double.parseDouble(testDiameter) < 200000 )){
 			return true;
 		}
 		return false;
 	}
+	
 	public boolean isValidTemperature(String testTemp){
-		if(isValidrealNumber(testTemp) && (-273.15 > Double.parseDouble(testTemp) || 
+		if(isValidrealNumber(testTemp) && (-273.15 < Double.parseDouble(testTemp) || 
 				Double.parseDouble(testTemp) < 500)){
 			return true;
 		}
 		return false;
 	}
+	
 	public boolean isValidNumberofMoons(int NumberofMoons){
 		if(NumberofMoons < 0 || NumberofMoons > 1000){
 			return false;
