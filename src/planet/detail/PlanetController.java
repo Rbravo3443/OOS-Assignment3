@@ -1,8 +1,10 @@
 package planet.detail;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -11,15 +13,19 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ImageInput;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -45,7 +51,6 @@ public class PlanetController implements Initializable {
 		planetDiameterKM.setText(planet.getDiameterkm());
 		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
 		planetNumberOfMoons.setText(Integer.toString(planet.getNumberofmoon()));
-		
 	}
 
     @FXML
@@ -75,15 +80,22 @@ public class PlanetController implements Initializable {
 
     @FXML
     private Label fancyPlanetName;
-
+    
     @FXML
-    void selectImage(ActionEvent event) throws FileNotFoundException{
+    void selectImage(ActionEvent event) throws IOException{
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("Select Image");
     	fileChooser.getExtensionFilters().addAll(
     			new ExtensionFilter("Image Files", "*.png","*.jpg","*.gif"));
-    	File selectedFile = fileChooser.showOpenDialog(new Stage().getOwner());
-    	System.out.println(selectedFile.getName() +" "+ selectedFile.getAbsolutePath()); //print to console for debugging
+    	try{
+    		File selectedFile = fileChooser.showOpenDialog(new Stage().getOwner());
+    		BufferedImage bufferedImage = ImageIO.read(selectedFile);
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            planetImage.setImage(image);
+    		System.out.println("file: " + selectedFile.getName() +"\nPath: "+ selectedFile.getAbsolutePath()); //print to console for debugging
+    	}catch(IllegalArgumentException e){
+    		System.out.println("User pressed cancel");
+    	}
     }
 
     @FXML
