@@ -1,7 +1,0 @@
-planetName:JU
-Planet Diameter KM: 1
-Planet Diameter M: 1000.0
-Planet Surface Temperature :40
-Planet Surface Temperature Fahrenheit: 4.4448
-Number of Moons: 0
-Image Link: null

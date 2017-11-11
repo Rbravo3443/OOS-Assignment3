@@ -40,6 +40,7 @@ public class PlanetController implements Initializable {
 	private Thread thread1;
 	private String text = "Planet";
 	private int number = 0;
+	private String imageLink;
 	
 	public PlanetController(Planet planet){
 		this.planet = planet;
@@ -92,6 +93,7 @@ public class PlanetController implements Initializable {
     		BufferedImage bufferedImage = ImageIO.read(selectedFile);
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             planetImage.setImage(image);
+            imageLink = selectedFile.getName();
     		System.out.println("file: " + selectedFile.getName() +"\nPath: "+ selectedFile.getAbsolutePath()); //print to console for debugging
     	}catch(IllegalArgumentException e){
     		System.out.println("User pressed cancel");
@@ -194,7 +196,7 @@ public class PlanetController implements Initializable {
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
     		number++;
     		text = "Planet";
-    		writer.println("Image Link: "+ImagePath);
+    		writer.println("Image Link: " + imageLink );
     		}catch(Exception e){
     		System.out.println("File is not being written to");
     	}

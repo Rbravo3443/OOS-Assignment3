@@ -1,7 +1,7 @@
-planetName:JU
-Planet Diameter KM: 40
-Planet Diameter M: 40000.0
-Planet Surface Temperature :100
-Planet Surface Temperature Fahrenheit: 37.7808
-Number of Moons: 0
-Image Link: null
+planetName:NEPTUNE
+Planet Diameter KM: 26
+Planet Diameter M: 16.155646
+Planet Surface Temperature :36
+Planet Surface Temperature Fahrenheit: 2.2224
+Number of Moons: 46
+Image Link: neptune.png
