@@ -1,7 +1,0 @@
-planetName:yap
-Planet Diameter KM: 543.3
-Planet Diameter M: 543300.0
-Planet Surface Temperature :21
-Planet Surface Temperature Fahrenheit: -6.1116
-Number of Moons: 2
-Image Link: null

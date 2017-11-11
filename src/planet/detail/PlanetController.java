@@ -1,18 +1,16 @@
 package planet.detail;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,7 +22,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
 public class PlanetController implements Initializable {
@@ -32,10 +32,10 @@ public class PlanetController implements Initializable {
 	private Thread thread1;
 	private String text = "Planet";
 	private int number = 0;
+	private String imageLink;
 	
 	public PlanetController(Planet planet){
 		this.planet = planet;
-		//thread1 = new Thread(new NumberParallel(this.planet));
 	}
 	public void initialize(URL location, ResourceBundle resources){
 		//thread1.start();
@@ -43,12 +43,12 @@ public class PlanetController implements Initializable {
 		planetDiameterKM.setText(planet.getDiameterkm());
 		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
 		planetNumberOfMoons.setText(Integer.toString(planet.getNumberofmoon()));
-		
 	}
+	Window window;
 
     @FXML
     private ImageView planetImage;
-    
+    @FXML
     private String ImagePath;
     @FXML
     private Button selectImageButton;
@@ -73,26 +73,28 @@ public class PlanetController implements Initializable {
 
     @FXML
     private Label fancyPlanetName;
-
+    
     @FXML
-    void selectImage(ActionEvent event) {
-    	 JFileChooser chooser = new JFileChooser();
-    	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
-    	        "JPG & GIF Images", "jpg", "gif");
-    	    chooser.setFileFilter(filter);
-    	    int returnVal = chooser.showOpenDialog(null); 
-    	FileInputStream File;
+    void selectImage(ActionEvent event) throws IOException{
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("Select Image");
+    	fileChooser.getExtensionFilters().addAll(
+    			new ExtensionFilter("Image Files", "*.png","*.jpg","*.gif"));
     	try{
-    		File = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
-    		Image image = new Image(File);
+    		File f = fileChooser.showOpenDialog(window);
+    		imageLink = f.getAbsolutePath();
+    		Image image = new Image("file:"+imageLink);
     		planetImage.setImage(image);
+    	}catch(IllegalArgumentException e){
+    		System.out.println("User pressed cancel");
     	}
-    	catch(FileNotFoundException e){
-    		e.printStackTrace();
-    	}
-    	 if(returnVal == JFileChooser.APPROVE_OPTION) {
-    		 ImagePath = chooser.getSelectedFile().getAbsolutePath();	
-  	    }
+    }
+    public Label setPlanetLabel(){
+    	return fancyPlanetName;
+    }
+    
+    public TextField setPlanetname(){
+    	return planetName;
     }
 
     @FXML
@@ -133,8 +135,8 @@ public class PlanetController implements Initializable {
         		    		break;
         		    	 case "Image Link":
         		    		String imagePath = match.group(2);
-        		    		FileInputStream File = new FileInputStream(imagePath);
-        		    		Image image = new Image(File);
+        		    		//FileInputStream File = new FileInputStream(imagePath);
+        		    		Image image = new Image("file:"+imagePath);
         		    		planetImage.setImage(image);
         		    		break;
         		         default:
@@ -189,7 +191,7 @@ public class PlanetController implements Initializable {
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
     		number++;
     		text = "Planet";
-    		writer.println("Image Link:"+ImagePath);
+    		writer.println("Image Link:" + imageLink );
     		}catch(Exception e){
     		System.out.println("File is not being written to");
     	}

@@ -36,5 +36,6 @@ public class AppMain extends Application {
 		primaryStage.setTitle("CS 4773 Assignment 3");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		controller.setPlanetLabel().textProperty().bind(controller.setPlanetname().textProperty());
 	}
 }
