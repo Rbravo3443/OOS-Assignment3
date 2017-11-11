@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -131,12 +132,10 @@ public class PlanetController implements Initializable {
         		    		planetNumberOfMoons.setText(match.group(2));
         		    		break;
         		    	 case "Image Link":
-        		    		 System.out.println("hello");
-        		    		//System.out.println(m.group(2));
-        		    		//ImagePath = match.group(2);
-        		    		//FileInputStream File = new FileInputStream(ImagePath);
-        		    		//Image image = new Image(File);
-        		    		//planetImage.setImage(image);
+        		    		String imagePath = match.group(2);
+        		    		FileInputStream File = new FileInputStream(imagePath);
+        		    		Image image = new Image(File);
+        		    		planetImage.setImage(image);
         		    		break;
         		         default:
         		    		 System.out.println("Something went very very very wrong!");
@@ -190,7 +189,7 @@ public class PlanetController implements Initializable {
     		writer.println("Number of Moons: " +planetNumberOfMoons.getText());
     		number++;
     		text = "Planet";
-    		writer.println("Image Link: "+ImagePath);
+    		writer.println("Image Link:"+ImagePath);
     		}catch(Exception e){
     		System.out.println("File is not being written to");
     	}

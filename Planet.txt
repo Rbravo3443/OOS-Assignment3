@@ -1,0 +1,5 @@
+planetName:JU
+Planet Diameter KM: 56.7
+Planet Diameter M: 56700.0
+Planet Surface Temperature :100
+Planet Surface Temperature Farheniet: 37.7808
