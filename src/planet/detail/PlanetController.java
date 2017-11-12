@@ -175,7 +175,7 @@ public class PlanetController implements Initializable{
 	        		 
 	        	}
 	    	}catch(Exception e){
-	    		e.printStackTrace();
+	    		e.getMessage();
 	    	}
     	}
     	
