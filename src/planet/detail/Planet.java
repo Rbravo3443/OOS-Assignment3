@@ -56,7 +56,7 @@ public class Planet {
 	public void setTemperatureF(String temperatureF) {
 		if (!isValidTemperature(temperatureF))
 			throw new InvalidPlanetException("Temperature in Farheneit is Invalid");
-		this.diameterkm.setValue(temperatureF);
+		this.temperatureF.setValue(temperatureF);
 	}
 
 	public int getNumberofmoon() {
@@ -123,7 +123,7 @@ public class Planet {
 
 	public boolean isValiddiameterNumber(String testDiameter) {
 		if (isValidrealNumber(testDiameter)
-				&& (0 > Double.parseDouble(testDiameter) || Double.parseDouble(testDiameter) < 200000)) {
+				&& (0 >= Double.parseDouble(testDiameter) || Double.parseDouble(testDiameter) <= 200000)) {
 			return true;
 		}
 		return false;
@@ -131,7 +131,7 @@ public class Planet {
 
 	public boolean isValidTemperature(String testTemp) {
 		if (isValidrealNumber(testTemp)
-				&& (-273.15 < Double.parseDouble(testTemp) || Double.parseDouble(testTemp) < 500)) {
+				&& (-273.15 <= Double.parseDouble(testTemp) && Double.parseDouble(testTemp) <= 500)) {
 			return true;
 		}
 		return false;
