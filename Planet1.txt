@@ -1,7 +1,7 @@
-planetName:dar
-Planet Diameter KM: 45.3
-Planet Diameter M: 28.1481063
-Planet Surface Temperature :82.4
-Planet Surface Temperature Fahrenheit: 28.002240000000004
-Number of Moons: 4
-Image Link:null
+planetName:uranus
+Planet Diameter KM: 100
+Planet Diameter M: 62.137100000000004
+Planet Surface Temperature :10
+Planet Surface Temperature Fahrenheit: -12.2232
+Number of Moons: 3
+Image Link:

@@ -86,7 +86,7 @@ public class PlanetController implements Initializable {
     		imageLink = f.getAbsolutePath();
     		Image image = new Image("file:"+imageLink);
     		planetImage.setImage(image);
-    	}catch(IllegalArgumentException e){
+    	}catch(NullPointerException e){
     		System.out.println("User pressed cancel");
     	}
     }
