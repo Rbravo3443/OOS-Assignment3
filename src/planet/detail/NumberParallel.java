@@ -16,41 +16,41 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class NumberParallel implements Runnable {
-	 	
-		private Planet plan_it;
-		
-		@FXML
-	    private ImageView planetImage;
 
-	    @FXML
-	    private Button selectImageButton;
+	private Planet plan_it;
 
-	    @FXML
-	    private TextField planetName;
+	@FXML
+	private ImageView planetImage;
 
-	    @FXML
-	    private TextField planetDiameterKM;
+	@FXML
+	private Button selectImageButton;
 
-	    @FXML
-	    private TextField planetDiameterM;
+	@FXML
+	private TextField planetName;
 
-	    @FXML
-	    private TextField planetMeanSurfaceTempC;
+	@FXML
+	private TextField planetDiameterKM;
 
-	    @FXML
-	    private TextField planetMeanSurfaceTempF;
+	@FXML
+	private TextField planetDiameterM;
 
-	    @FXML
-	    private TextField planetNumberOfMoons;
+	@FXML
+	private TextField planetMeanSurfaceTempC;
 
-	    @FXML
-	    private Label fancyPlanetName;
-	    
-	public NumberParallel(Planet planet){
+	@FXML
+	private TextField planetMeanSurfaceTempF;
+
+	@FXML
+	private TextField planetNumberOfMoons;
+
+	@FXML
+	private Label fancyPlanetName;
+
+	public NumberParallel(Planet planet) {
 		this.plan_it = planet;
 	}
-	
-	public void run(){
+
+	public void run() {
 		System.out.println("Hello");
 		planetDiameterM.setText(planetDiameterKM.getText());
 	}

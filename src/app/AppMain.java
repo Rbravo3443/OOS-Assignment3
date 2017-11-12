@@ -15,21 +15,21 @@ import planet.detail.PlanetController;
 public class AppMain extends Application {
 	public AppMain() {
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	//FXML startup method
+
+	// FXML startup method
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Planet planet = new Planet("Sample","72.5","56.7",0);
-		
+		Planet planet = new Planet("Sample", "72.5", "56.7", 0);
+
 		PlanetController controller = new PlanetController(planet);
 
 		FXMLLoader loader = new FXMLLoader(controller.getClass().getResource("PlanetView.fxml"));
 		loader.setController(controller);
-		
+
 		Pane pane = (Pane) loader.load();
 
 		Scene scene = new Scene(pane, 590, 400);
