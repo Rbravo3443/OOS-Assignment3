@@ -118,8 +118,8 @@ public class PlanetController implements Initializable {
         		    	 case "planetName":
         		    		planetName.setText(match.group(2));
         		    		break;
-        		    	 case "Planet Diameter KM":
-        		    		planetDiameterKM.setText(match.group(2));
+        		    	 case "Planet Diameter KM": 
+        		    		planetDiameterKM.setText(match.group(2).replaceAll("\\s+", ""));
         		    		break;
         		    	 case "Planet Diameter M":
         		    	    planetDiameterM.setText(match.group(2));
@@ -131,7 +131,8 @@ public class PlanetController implements Initializable {
         		    		planetMeanSurfaceTempF.setText(match.group(2));
         		    		break;
         		    	 case "Number of Moons":
-        		    		planetNumberOfMoons.setText(match.group(2));
+        		    	
+        		    		planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
         		    		break;
         		    	 case "Image Link":
         		    		String imagePath = match.group(2);
