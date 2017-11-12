@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -16,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
@@ -116,54 +118,66 @@ public class PlanetController implements Initializable{
     	FileInputStream LoadedFile;
     	InputStream StreamForFile;
     	Scanner Scan;
-    	try{
-    		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
-    		StreamForFile = ((InputStream) LoadedFile);
-        	Scan = new Scanner( StreamForFile );
-        	while(Scan.hasNext()){
-        		 String test = Scan.nextLine();
-        		 Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
-        		 Matcher match = pattern.matcher(test);
-        		 if (match.find())
-        		 {
-        		     switch(match.group(1)){
-        		    	 case "planetName":
-        		    		planetName.setText(match.group(2));
-        		    		break;
-        		    	 case "Planet Diameter KM": 
-        		    		planetDiameterKM.setText(match.group(2).replaceAll("\\s+", ""));
-        		    		break;
-        		    	 case "Planet Diameter M":
-        		    	    planetDiameterM.setText(match.group(2));
-        		    	    break;
-        		    	 case "Planet Surface Temperature ":
-        		    		planetMeanSurfaceTempC.setText(match.group(2));
-        		    		break;
-        		    	 case "Planet Surface Temperature Fahrenheit":
-        		    		planetMeanSurfaceTempF.setText(match.group(2));
-        		    		break;
-        		    	 case "Number of Moons":
-        		    	
-        		    		planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
-        		    		break;
-        		    	 case "Image Link":
-        		    		String imagePath = match.group(2);
-        		    		//FileInputStream File = new FileInputStream(imagePath);
-        		    		Image image = new Image("file:"+imagePath);
-        		    		planetImage.setImage(image);
-        		    		break;
-        		         default:
-        		    		 System.out.println("Something went very very very wrong!");
-        		    		 break;
-        		     }
-               		     
-        		 }
-        		 
-        	}
-    	}catch(Exception e){
-    		e.printStackTrace();
+    	boolean confirmLoad = false;
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Confirmation Required");
+    	alert.setHeaderText("Overwrite Confirmation");
+    	alert.setContentText("Are you sure you want to overwrite the fields?");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if(result.get() == ButtonType.OK)
+    		confirmLoad = true;
+    	else
+    		confirmLoad = false;
+    	
+    	if(confirmLoad){
+	    	try{
+	    		LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
+	    		StreamForFile = ((InputStream) LoadedFile);
+	        	Scan = new Scanner( StreamForFile );
+	        	while(Scan.hasNext()){
+	        		 String test = Scan.nextLine();
+	        		 Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
+	        		 Matcher match = pattern.matcher(test);
+	        		 if (match.find())
+	        		 {
+	        		     switch(match.group(1)){
+	        		    	 case "planetName":
+	        		    		planetName.setText(match.group(2));
+	        		    		break;
+	        		    	 case "Planet Diameter KM": 
+	        		    		planetDiameterKM.setText(match.group(2).replaceAll("\\s+", ""));
+	        		    		break;
+	        		    	 case "Planet Diameter M":
+	        		    	    planetDiameterM.setText(match.group(2));
+	        		    	    break;
+	        		    	 case "Planet Surface Temperature ":
+	        		    		planetMeanSurfaceTempC.setText(match.group(2));
+	        		    		break;
+	        		    	 case "Planet Surface Temperature Fahrenheit":
+	        		    		planetMeanSurfaceTempF.setText(match.group(2));
+	        		    		break;
+	        		    	 case "Number of Moons":
+	        		    	
+	        		    		planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
+	        		    		break;
+	        		    	 case "Image Link":
+	        		    		String imagePath = match.group(2);
+	        		    		//FileInputStream File = new FileInputStream(imagePath);
+	        		    		Image image = new Image("file:"+imagePath);
+	        		    		planetImage.setImage(image);
+	        		    		break;
+	        		         default:
+	        		    		 System.out.println("Something went very very very wrong!");
+	        		    		 break;
+	        		     }
+	               		     
+	        		 }
+	        		 
+	        	}
+	    	}catch(Exception e){
+	    		e.printStackTrace();
+	    	}
     	}
- 
     	
     	
     }
