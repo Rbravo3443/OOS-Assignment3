@@ -23,7 +23,7 @@ public class AppMain extends Application {
 	//FXML startup method
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Planet planet = new Planet("JU","72.5","56.7",0);
+		Planet planet = new Planet("Sample","72.5","56.7",0);
 		
 		PlanetController controller = new PlanetController(planet);
 

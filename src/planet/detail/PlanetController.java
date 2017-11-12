@@ -41,7 +41,6 @@ public class PlanetController implements Initializable {
 		//thread1.start();
 		planetName.setText("");
 		//planetName.setText(planet.getPlanetName());
-		
 		planetDiameterKM.setText(planet.getDiameterkm());
 		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
 		planetNumberOfMoons.setText(Integer.toString(planet.getNumberofmoon()));
