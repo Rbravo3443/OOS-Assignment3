@@ -2,6 +2,7 @@ package planet.detail;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -27,13 +28,20 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 
-public class PlanetController implements Initializable {
+public class PlanetController implements Initializable{
 	private Planet planet;
 	private Thread thread1;
 	private String text = "Planet";
 	private int number = 0;
 	private String imageLink;
+	private Image defaultPlanetImage;{
+		try{
+			defaultPlanetImage = new Image(new FileInputStream("images/no_image.png"));
+		}catch(FileNotFoundException e){
+			e.getMessage();
+		} 
 	
+	}
 	public PlanetController(Planet planet){
 		this.planet = planet;
 	}
@@ -41,14 +49,17 @@ public class PlanetController implements Initializable {
 		//thread1.start();
 		planetName.setText("");
 		//planetName.setText(planet.getPlanetName());
+		planetImage.setImage(defaultPlanetImage);
 		planetDiameterKM.setText(planet.getDiameterkm());
 		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
 		planetNumberOfMoons.setText(Integer.toString(planet.getNumberofmoon()));
 	}
+	
 	Window window;
 
     @FXML
     private ImageView planetImage;
+
     @FXML
     private String ImagePath;
     @FXML
