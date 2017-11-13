@@ -30,7 +30,7 @@ import javafx.stage.Window;
 
 public class PlanetController implements Initializable {
 	private Planet planet;
-	private Thread thread1;
+	// private Thread thread1;
 	private String text = "Planet";
 	private int number = 0;
 	private String imageLink;
@@ -41,9 +41,8 @@ public class PlanetController implements Initializable {
 		} catch (FileNotFoundException e) {
 			e.getMessage();
 		}
-
 	}
-
+	
 	public PlanetController(Planet planet) {
 		this.planet = planet;
 	}
@@ -121,15 +120,9 @@ public class PlanetController implements Initializable {
 		Scanner Scan;
 		boolean confirmLoad = false;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmation Required");
-		alert.setHeaderText("Overwrite Confirmation");
-		alert.setContentText("Are you sure you want to overwrite the fields?");
+		loadAlerts(alert);
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK)
-			confirmLoad = true;
-		else
-			confirmLoad = false;
-
+		confirmLoad = getConfirmLoad(result);
 		if (confirmLoad) {
 			try {
 				LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
@@ -140,54 +133,114 @@ public class PlanetController implements Initializable {
 					Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
 					Matcher match = pattern.matcher(test);
 					if (match.find()) {
-						switch (match.group(1)) {
-						case "planetName":
-							planetName.setText(match.group(2));
-							break;
-						case "Planet Diameter KM":
-							planetDiameterKM.setText(match.group(2).replaceAll("\\s+", ""));
-							break;
-						case "Planet Diameter M":
-							planetDiameterM.setText(match.group(2));
-							break;
-						case "Planet Surface Temperature ":
-							planetMeanSurfaceTempC.setText(match.group(2));
-							break;
-						case "Planet Surface Temperature Fahrenheit":
-							planetMeanSurfaceTempF.setText(match.group(2));
-							break;
-						case "Number of Moons":
-
-							planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
-							break;
-						case "Image Link":
-							String imagePath = match.group(2);
-							// FileInputStream File = new FileInputStream(imagePath);
-							Image image = new Image("file:" + imagePath);
-							planetImage.setImage(image);
-							break;
-						default:
-							System.out.println("Something went very very very wrong!");
-							break;
-						}
-
+						loadCaseMatcher(match);
 					}
-
 				}
 			} catch (Exception e) {
 				e.getMessage();
 			}
 		}
-
 	}
 
-	/**
-	 * Refactor
-	 * 
+	private boolean getConfirmLoad(Optional<ButtonType> result) {
+		boolean confirmLoad;
+		if (result.get() == ButtonType.OK)
+			confirmLoad = true;
+		else
+			confirmLoad = false;
+		return confirmLoad;
+	}
+
+	private void loadAlerts(Alert alert) {
+		alert.setTitle("Confirmation Required");
+		alert.setHeaderText("Overwrite Confirmation");
+		alert.setContentText("Are you sure you want to overwrite the fields?");
+	}
+
+	private void loadCaseMatcher(Matcher match) {
+		switch (match.group(1)) {
+		case "planetName":
+			planetName.setText(match.group(2));
+			break;
+		case "Planet Diameter KM":
+			planetDiameterKM.setText(match.group(2).replaceAll("\\s+", ""));
+			break;
+		case "Planet Diameter M":
+			planetDiameterM.setText(match.group(2));
+			break;
+		case "Planet Surface Temperature ":
+			planetMeanSurfaceTempC.setText(match.group(2));
+			break;
+		case "Planet Surface Temperature Fahrenheit":
+			planetMeanSurfaceTempF.setText(match.group(2));
+			break;
+		case "Number of Moons":
+
+			planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
+			break;
+		case "Image Link":
+			String imagePath = match.group(2);
+			// FileInputStream File = new FileInputStream(imagePath);
+			Image image = new Image("file:" + imagePath);
+			planetImage.setImage(image);
+			break;
+		default:
+			System.out.println("Something went very very very wrong!");
+			break;
+		}
+	}
+
+	/** 
 	 * @param event
 	 */
 	@FXML
 	void savePlanet(ActionEvent event) {
+		String errorMessage = errorCheckPlanetFields();
+		PrintWriter writer = null;
+		if (planet.isValidFields(planetName.getText(), planetDiameterKM.getText(), planetMeanSurfaceTempC.getText(),
+				Integer.parseInt(planetNumberOfMoons.getText()))) {
+			planetDiameterM.setText(planet.KM_To_M(Double.parseDouble(planetDiameterKM.getText())));
+			planetMeanSurfaceTempF.setText(planet.Far_To_Cel(Double.parseDouble(planetMeanSurfaceTempC.getText())));
+			try {
+				String num = Integer.toString(number);
+				text += num;
+				text += ".txt";
+				writer = new PrintWriter(text, "UTF-8");
+				getPlanetData(writer);
+				number++;
+				text = "Planet";
+				writer.println("Image Link:" + imageLink);
+			} catch (Exception e) {
+				System.out.println("File is not being written to");
+			}
+		} else {
+			if (errorMessage.length() > 0) {
+				alertMessages(errorMessage);
+			}
+		}
+		writer.close();
+	}
+
+	private void alertMessages(String errorMessage) {
+		Stage dialogStage = null;
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(dialogStage);
+		alert.setTitle("Invalid Fields");
+		alert.setHeaderText("Please Correct Invalid fields");
+		alert.setContentText(errorMessage);
+		alert.showAndWait();
+	}
+
+	private void getPlanetData(PrintWriter writer) {
+		writer.println("planetName:" + planetName.getText());
+		writer.println("Planet Diameter KM: " + planetDiameterKM.getText());
+		writer.println("Planet Diameter M: " + planetDiameterM.getText());
+		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
+		writer.println("Planet Surface Temperature Fahrenheit: " + planetMeanSurfaceTempF.getText());
+		writer.println("Number of Moons: " + planetNumberOfMoons.getText());
+	}
+
+	private String errorCheckPlanetFields() {
 		String errorMessage = " ";
 		if (planetName.getText() == null || !(planet.isValidPlanet(planetName.getText()))) {
 			errorMessage += "Invalid Planet Name !\n";
@@ -203,42 +256,7 @@ public class PlanetController implements Initializable {
 				|| !(planet.isValidNumberofMoons(Integer.parseInt(planetNumberOfMoons.getText())))) {
 			errorMessage += "Invalid Number of Moons! \n";
 		}
-		PrintWriter writer = null;
-		if (planet.isValidFields(planetName.getText(), planetDiameterKM.getText(), planetMeanSurfaceTempC.getText(),
-				Integer.parseInt(planetNumberOfMoons.getText()))) {
-			planetDiameterM.setText(planet.KM_To_M(Double.parseDouble(planetDiameterKM.getText())));
-			planetMeanSurfaceTempF.setText(planet.Far_To_Cel(Double.parseDouble(planetMeanSurfaceTempC.getText())));
-			try {
-				String num = Integer.toString(number);
-				text += num;
-				text += ".txt";
-				writer = new PrintWriter(text, "UTF-8");
-				writer.println("planetName:" + planetName.getText());
-				writer.println("Planet Diameter KM: " + planetDiameterKM.getText());
-				writer.println("Planet Diameter M: " + planetDiameterM.getText());
-				writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
-				writer.println("Planet Surface Temperature Fahrenheit: " + planetMeanSurfaceTempF.getText());
-				writer.println("Number of Moons: " + planetNumberOfMoons.getText());
-				number++;
-				text = "Planet";
-				writer.println("Image Link:" + imageLink);
-			} catch (Exception e) {
-				System.out.println("File is not being written to");
-			}
-		} else {
-			if (errorMessage.length() > 0) {
-				Stage dialogStage = null;
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.initOwner(dialogStage);
-				alert.setTitle("Invalid Fields");
-				alert.setHeaderText("Please Correct Invalid fields");
-				alert.setContentText(errorMessage);
-				alert.showAndWait();
-			}
-
-		}
-		writer.close();
-
+		return errorMessage;
 	}
 
 }

@@ -1,7 +1,7 @@
-planetName:Neptune
-Planet Diameter KM: 60
-Planet Diameter M: 37.28226
+planetName:Uranus
+Planet Diameter KM: 100
+Planet Diameter M: 62.137100000000004
 Planet Surface Temperature :10
 Planet Surface Temperature Fahrenheit: -12.2232
 Number of Moons: 3
-Image Link:/Users/tefnick/git/OOS-Assignment3/images/neptune.png
+Image Link:null
