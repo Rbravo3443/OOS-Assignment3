@@ -125,16 +125,20 @@ public class PlanetController implements Initializable {
 				LoadedFile = new FileInputStream(Selector.showOpenDialog(new Stage()).getAbsolutePath());
 				StreamForFile = ((InputStream) LoadedFile);
 				Scan = new Scanner(StreamForFile);
-				while (Scan.hasNext()) {
-					String test = Scan.nextLine();
-					Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
-					Matcher match = pattern.matcher(test);
-					if (match.find()) {
-						loadCaseMatcher(match);
-					}
-				}
+				scanForDataMatch(Scan);
 			} catch (Exception e) {
 				e.getMessage();
+			}
+		}
+	}
+
+	private void scanForDataMatch(Scanner Scan) {
+		while (Scan.hasNext()) {
+			String test = Scan.nextLine();
+			Pattern pattern = Pattern.compile("(^.*?):(.*$?)");
+			Matcher match = pattern.matcher(test);
+			if (match.find()) {
+				loadCaseMatcher(match);
 			}
 		}
 	}
