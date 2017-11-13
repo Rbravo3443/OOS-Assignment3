@@ -142,6 +142,12 @@ public class PlanetController implements Initializable {
 		}
 	}
 
+	private void loadAlerts(Alert alert) {
+		alert.setTitle("Confirmation Required");
+		alert.setHeaderText("Overwrite Confirmation");
+		alert.setContentText("Are you sure you want to overwrite the fields?");
+	}
+	
 	private boolean getConfirmLoad(Optional<ButtonType> result) {
 		boolean confirmLoad;
 		if (result.get() == ButtonType.OK)
@@ -149,12 +155,6 @@ public class PlanetController implements Initializable {
 		else
 			confirmLoad = false;
 		return confirmLoad;
-	}
-
-	private void loadAlerts(Alert alert) {
-		alert.setTitle("Confirmation Required");
-		alert.setHeaderText("Overwrite Confirmation");
-		alert.setContentText("Are you sure you want to overwrite the fields?");
 	}
 
 	private void loadCaseMatcher(Matcher match) {
@@ -221,25 +221,6 @@ public class PlanetController implements Initializable {
 		writer.close();
 	}
 
-	private void alertMessages(String errorMessage) {
-		Stage dialogStage = null;
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.initOwner(dialogStage);
-		alert.setTitle("Invalid Fields");
-		alert.setHeaderText("Please Correct Invalid fields");
-		alert.setContentText(errorMessage);
-		alert.showAndWait();
-	}
-
-	private void getPlanetData(PrintWriter writer) {
-		writer.println("planetName:" + planetName.getText());
-		writer.println("Planet Diameter KM: " + planetDiameterKM.getText());
-		writer.println("Planet Diameter M: " + planetDiameterM.getText());
-		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
-		writer.println("Planet Surface Temperature Fahrenheit: " + planetMeanSurfaceTempF.getText());
-		writer.println("Number of Moons: " + planetNumberOfMoons.getText());
-	}
-
 	private String errorCheckPlanetFields() {
 		String errorMessage = " ";
 		if (planetName.getText() == null || !(planet.isValidPlanet(planetName.getText()))) {
@@ -258,5 +239,23 @@ public class PlanetController implements Initializable {
 		}
 		return errorMessage;
 	}
-
+	
+	private void getPlanetData(PrintWriter writer) {
+		writer.println("planetName:" + planetName.getText());
+		writer.println("Planet Diameter KM: " + planetDiameterKM.getText());
+		writer.println("Planet Diameter M: " + planetDiameterM.getText());
+		writer.println("Planet Surface Temperature :" + planetMeanSurfaceTempC.getText());
+		writer.println("Planet Surface Temperature Fahrenheit: " + planetMeanSurfaceTempF.getText());
+		writer.println("Number of Moons: " + planetNumberOfMoons.getText());
+	}
+	
+	private void alertMessages(String errorMessage) {
+		Stage dialogStage = null;
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.initOwner(dialogStage);
+		alert.setTitle("Invalid Fields");
+		alert.setHeaderText("Please Correct Invalid fields");
+		alert.setContentText(errorMessage);
+		alert.showAndWait();
+	}
 }
