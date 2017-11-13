@@ -30,7 +30,6 @@ import javafx.stage.Window;
 
 public class PlanetController implements Initializable {
 	private Planet planet;
-	// private Thread thread1;
 	private String text = "Planet";
 	private int number = 0;
 	private String imageLink;
@@ -48,9 +47,7 @@ public class PlanetController implements Initializable {
 	}
 
 	public void initialize(URL location, ResourceBundle resources) {
-		// thread1.start();
 		planetName.setText("");
-		// planetName.setText(planet.getPlanetName());
 		planetImage.setImage(defaultPlanetImage);
 		planetDiameterKM.setText(planet.getDiameterkm());
 		planetMeanSurfaceTempF.setText(planet.getTemperatureF());
@@ -175,12 +172,10 @@ public class PlanetController implements Initializable {
 			planetMeanSurfaceTempF.setText(match.group(2));
 			break;
 		case "Number of Moons":
-
 			planetNumberOfMoons.setText(match.group(2).replaceAll("\\s+", ""));
 			break;
 		case "Image Link":
 			String imagePath = match.group(2);
-			// FileInputStream File = new FileInputStream(imagePath);
 			Image image = new Image("file:" + imagePath);
 			planetImage.setImage(image);
 			break;

@@ -24,14 +24,10 @@ public class AppMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Planet planet = new Planet("Sample", "72.5", "56.7", 0);
-
 		PlanetController controller = new PlanetController(planet);
-
 		FXMLLoader loader = new FXMLLoader(controller.getClass().getResource("PlanetView.fxml"));
 		loader.setController(controller);
-
 		Pane pane = (Pane) loader.load();
-
 		Scene scene = new Scene(pane, 590, 400);
 		primaryStage.setTitle("CS 4773 Assignment 3");
 		primaryStage.setScene(scene);
